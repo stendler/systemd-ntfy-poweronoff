@@ -1,0 +1,17 @@
+[Unit]
+Description=Send a notification on system shutdown
+BindsTo=network-online.target
+#Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment=NTFY_URL=https://ntfy.sh
+# see https://docs.ntfy.sh/emojis/
+Environment=NTFY_TAGS="red_circle"
+ExecStart=/bin/true
+RemainAfterExit=true
+ExecStop=/usr/bin/sh -c "curl -H \"Tags: $NTFY_TAGS\" -H \"Firebase: no\" -d \"%H is shutting down\" $NTFY_URL/%i"
+
+[Install]
+WantedBy=default.target

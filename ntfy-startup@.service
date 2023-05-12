@@ -1,0 +1,21 @@
+[Unit]
+Description=Send a notification on system startup
+StartLimitInterval=200
+StartLimitBurst=5
+Wants=network-online.target
+After=network-online.target
+After=multi-user.target
+
+[Service]
+Type=oneshot
+Restart=on-failure
+RestartSec=30
+Environment=NTFY_URL=https://ntfy.sh
+# see https://docs.ntfy.sh/emojis/
+Environment=NTFY_TAGS="green_circle"
+Environment="Startup time: $(uptime)"
+#Environment=NTFY_MESSAGE="IPv4: $(dig @resolver3.opendns.com myip.opendns.com +short -4) - IPv6: $(dig @resolver3.opendns.com myip.opendns.com +short -6) - Local IPs: $(hostname -i)"
+ExecStart=/usr/bin/sh -c 'curl -H "Tags: $NTFY_TAGS" -H "Firebase: no" -d "%H is online\n$(/bin/sh -c \"echo $NTFY_MESSAGE\")" $NTFY_URL/%i'
+
+[Install]
+WantedBy=default.target
