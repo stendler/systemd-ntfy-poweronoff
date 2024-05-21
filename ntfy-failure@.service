@@ -1,0 +1,10 @@
+[Unit]
+Description=Send a notification OnFailure of another service. Declare 'OnFailure=ntfy-failure@%i.service' in another service and set NTFY_TOPIC in an override of this service.
+
+[Service]
+Type=oneshot
+Environment=NTFY_URL=https://ntfy.sh
+Environment=NTFY_TOPIC=
+# see https://docs.ntfy.sh/emojis/
+Environment=NTFY_TAGS="warning"
+ExecStart=/usr/bin/sh -c 'curl -H "Tags: $NTFY_TAGS" -H "Firebase: no" -d "[%H] Service %i failed" $NTFY_URL/$NTFY_TOPIC'
