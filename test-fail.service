@@ -1,0 +1,7 @@
+[Unit]
+Description=Service that always fails to test OnFailure
+OnFailure=ntfy-failure@%i.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/false
