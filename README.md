@@ -6,7 +6,9 @@ Systemd services to announce system startup and shutdown via [ntfy.sh](https://n
 
 To install, copy the service files into `/etc/systemd/system/`.
 
-Optionally, copy `ntfy-failure@.service` and `test-fail.service` into `/etc/systemd/user/` to allow them to be used for user services.
+Optionally, copy `ntfy-failure@.service` and `test-fail.service` into `/etc/systemd/user/` to allow them to be used for user services.  
+In this case, for ntfy-failure use the ExecStart with the `--user` flag added to the journalctl command.
+Otherwise, it defaults to the system logs, which the current user might not have access to and which likely won't contain the relevant error message.
 
 ## Usage
 
