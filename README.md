@@ -1,4 +1,4 @@
-# notifications on system startup and shutdown
+# notifications on system startup, shutdown and service failure
 
 Systemd services to announce system startup and shutdown via [ntfy.sh](https://ntfy.sh) notifications.
 
