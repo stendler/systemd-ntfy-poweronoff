@@ -7,6 +7,6 @@ Environment=NTFY_URL=https://ntfy.sh
 Environment=NTFY_TOPIC=
 # see https://docs.ntfy.sh/emojis/
 Environment=NTFY_TAGS="warning"
-# limit to 4096 to prevent turning the message into an attachment: https://docs.ntfy.sh/publish/#limitations
-ExecStart=/usr/bin/sh -c 'curl -H "Tags: $NTFY_TAGS" -H "Firebase: no" -d "[%u@%H] Service %i failed\n$(journalctl --unit %i --lines 5 --reverse --no-pager --boot | head -c 4096)" $NTFY_URL/$NTFY_TOPIC'
-#ExecStart=/usr/bin/sh -c 'curl -H "Tags: $NTFY_TAGS" -H "Firebase: no" -d "[%u@%H] Service %i failed\n$(journalctl --user --unit %i --lines 5 --reverse --no-pager --boot | head -c 4096)" $NTFY_URL/$NTFY_TOPIC'
+# limit to less than 4096 to prevent turning the message into an attachment: https://docs.ntfy.sh/publish/#limitations
+ExecStart=/usr/bin/sh -c 'curl -H "Tags: $NTFY_TAGS" -H "Firebase: no" -d "[%u@%H] Service %i failed\n$(journalctl --unit %i --lines 5 --reverse --no-pager --boot | head -c 4095)" $NTFY_URL/$NTFY_TOPIC'
+#ExecStart=/usr/bin/sh -c 'curl -H "Tags: $NTFY_TAGS" -H "Firebase: no" -d "[%u@%H] Service %i failed\n$(journalctl --user --unit %i --lines 5 --reverse --no-pager --boot | head -c 4095)" $NTFY_URL/$NTFY_TOPIC'
